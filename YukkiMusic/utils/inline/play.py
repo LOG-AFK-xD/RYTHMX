@@ -14,6 +14,12 @@ def track_markup(_, videoid, user_id):
             ),
         ],
         [
+              InlineKeyboardButton("📨 Support", url=f"https://t.me/UNIQUE_SOCIETY"),
+              InlineKeyboardButton(
+                    "📨 Updates", url=f"https://t.me/BLAZE_SUPPORT"
+           ),
+        ],
+        [
             InlineKeyboardButton(
                 text=_["CLOSE_BUTTON"],
                 callback_data=f"forceclose {videoid}|{user_id}",
@@ -32,6 +38,12 @@ def stream_markup(_, videoid):
             ),
             InlineKeyboardButton(
                 text=_["PL_B_3"], switch_inline_query_current_chat=""
+            ),
+        ],
+        [
+                InlineKeyboardButton("📨 Support", url=f"https://t.me/UNIQUE_SOCIETY"),
+                InlineKeyboardButton(
+                    "📨 Updates", url=f"https://t.me/BLAZE_SUPPORT"
             ),
         ],
         [
@@ -67,6 +79,12 @@ def playlist_markup(_, videoid, user_id, ptype):
             InlineKeyboardButton(
                 text=_["P_B_2"],
                 callback_data=f"YukkiPlaylists {videoid}|{user_id}|{ptype}|v",
+              ),
+           ],
+           [
+                InlineKeyboardButton("📨 Support", url=f"https://t.me/UNIQUE_SOCIETY"),
+                InlineKeyboardButton(
+                    "📨 Updates", url=f"https://t.me/BLAZE_SUPPORT"
             ),
         ],
         [
