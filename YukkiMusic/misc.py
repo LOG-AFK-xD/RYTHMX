@@ -1,3 +1,12 @@
+#
+# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
+#
+# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
+#
+# All rights reserved.
+
 import socket
 import time
 
@@ -44,24 +53,26 @@ def dbb():
 
 def sudo():
     global SUDOERS
-    sudoersdb = pymongodb.sudoers
-    sudoers = sudoersdb.find_one({"sudo": "sudo"})
-    sudoers = [] if not sudoers else sudoers["sudoers"]
-    for user_id in SUDOERS:
-        if user_id not in sudoers:
-            sudoers.append(user_id)
-            sudoersdb.update_one(
-                {"sudo": "sudo"},
-                {"$set": {"sudoers": sudoers}},
-                upsert=True,
-            )
     OWNER = config.OWNER_ID
-    if sudoers:
-        for x in sudoers:
-            SUDOERS.add(x)
-    if OWNER:
-        for x in OWNER:
-            SUDOERS.add(x)
+    if config.MONGO_DB_URI is None:
+        for user_id in OWNER:
+            SUDOERS.add(user_id)
+    else:
+        sudoersdb = pymongodb.sudoers
+        sudoers = sudoersdb.find_one({"sudo": "sudo"})
+        sudoers = [] if not sudoers else sudoers["sudoers"]
+        for user_id in OWNER:
+            SUDOERS.add(user_id)
+            if user_id not in sudoers:
+                sudoers.append(user_id)
+                sudoersdb.update_one(
+                    {"sudo": "sudo"},
+                    {"$set": {"sudoers": sudoers}},
+                    upsert=True,
+                )
+        if sudoers:
+            for x in sudoers:
+                SUDOERS.add(x)
     LOGGER(__name__).info(f"Sudoers Loaded.")
 
 
